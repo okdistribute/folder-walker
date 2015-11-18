@@ -17,9 +17,10 @@ stream.on('data', function (data) {
 Example item in the stream:
 
 ```
- filepath: '/Users/karissa/dev/node_modules/folder-walker/test.js',
- stats:
-  { dev: 16777220,
+{
+  filepath: '/Users/karissa/dev/node_modules/folder-walker/test.js',
+  stats: {
+    dev: 16777220,
     mode: 33188,
     nlink: 1,
     uid: 501,
@@ -32,5 +33,7 @@ Example item in the stream:
     atime: Wed Nov 18 2015 01:15:52 GMT-0800 (PST),
     mtime: Wed Nov 18 2015 01:15:51 GMT-0800 (PST),
     ctime: Wed Nov 18 2015 01:15:51 GMT-0800 (PST),
-    birthtime: Wed Nov 18 2015 00:19:19 GMT-0800 (PST) } }
+    birthtime: Wed Nov 18 2015 00:19:19 GMT-0800 (PST)
+  }
+}
 ```
