@@ -44,8 +44,12 @@ test('test data stream filtering out .git', function (t) {
   }
 
   var stream = walker(process.cwd(), {filter: filter})
+
   stream.on('data', function (data) {
     t.equal(data.filepath.indexOf('.git'), -1)
+    t.ok(data.stat)
+    t.ok(data.relname)
+    t.ok(data.basename)
   })
 
   stream.on('error', function (err) {

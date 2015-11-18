@@ -18,8 +18,10 @@ Example item in the stream:
 
 ```
 {
-  filepath: '/Users/karissa/dev/node_modules/folder-walker/test.js',
-  stats: {
+  basename: 'index.js',
+  relname: 'test/index.js',
+  filepath: '/Users/karissa/dev/node_modules/folder-walker/test/index.js',
+  stat: {
     dev: 16777220,
     mode: 33188,
     nlink: 1,
