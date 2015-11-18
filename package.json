@@ -1,7 +1,7 @@
 {
   "name": "folder-walker",
   "version": "1.0.1",
-  "description": "Get a stream of files by walking recursively through the files in a folder",
+  "description": "A recursive stream of the files and directories in a given folder",
   "main": "index.js",
   "scripts": {
     "test": "node test.js"

@@ -33,11 +33,11 @@ Walker.prototype._read = function () {
 Walker.prototype._walk = function (dir, cb) {
   var self = this
   fs.readdir(dir, function (err, files) {
-    if (err) return self.emit('error', err)
+    if (err) return cb(err)
     var walk = through.obj(function (data, enc, next) {
       self._onfile(path.join(dir, data), next)
     })
-    pump(from.obj(files), walk, cb)
+    pump(from.obj(files.sort()), walk, cb)
   })
 }
 
@@ -46,13 +46,13 @@ Walker.prototype._onfile = function (filepath, cb) {
   if (!this.filter(filepath)) return cb()
   fs.stat(filepath, function (err, stat) {
     if (err) return cb(err)
-    if (stat.isDirectory()) return self._walk(filepath, cb)
     self.push({
       basename: path.basename(filepath),
       relname: path.relative(self._dir, filepath),
       filepath: filepath,
       stat: stat
     })
+    if (stat.isDirectory()) return self._walk(filepath, cb)
     return cb()
   })
 }
