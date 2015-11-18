@@ -4,7 +4,7 @@
 
 ## Example
 
-```
+```js
 var walker = require('folder-walker')
 
 var stream = walker('/path/to/folder')
