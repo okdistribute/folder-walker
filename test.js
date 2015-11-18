@@ -1,5 +1,5 @@
 var test = require('tape')
-var walker = require('folder-walker')
+var walker = require('./')
 
 test('test data stream', function (t) {
   var stream = walker(process.cwd())
