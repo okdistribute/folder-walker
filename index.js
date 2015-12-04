@@ -44,7 +44,7 @@ Walker.prototype._walk = function (dir, cb) {
 Walker.prototype._onfile = function (filepath, cb) {
   var self = this
   if (!this.filter(filepath)) return cb()
-  fs.stat(filepath, function (err, stat) {
+  fs.lstat(filepath, function (err, stat) {
     if (err) return cb(err)
     self.push({
       basename: path.basename(filepath),
