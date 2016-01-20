@@ -24,10 +24,16 @@ Walker.prototype._read = function () {
   var self = this
   if (!self._want) return
   self._want = false
-  self._walk(self._dir, function (err) {
+  fs.stat(self._dir, function (err, st) {
+    if (err) return self.emit('error', err)
+    if (!st.isDirectory()) return self._onfile(self._dir, done)
+    self._walk(self._dir, done)
+  })
+
+  function done (err) {
     if (err) return self.emit('error', err)
     self._end()
-  })
+  }
 }
 
 Walker.prototype._walk = function (dir, cb) {

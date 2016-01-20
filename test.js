@@ -16,6 +16,23 @@ test('test data stream', function (t) {
   })
 })
 
+test('test data stream with only a file', function (t) {
+  var stream = walker(__filename)
+  t.plan(1)
+
+  stream.on('data', function (data) {
+    t.same(data.filepath, __filename)
+  })
+
+  stream.on('error', function (err) {
+    t.ifError(err)
+  })
+
+  stream.on('end', function () {
+    t.end()
+  })
+})
+
 test('test data stream with filter', function (t) {
   function filter (filepath) {
     return false
