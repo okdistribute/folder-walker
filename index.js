@@ -54,7 +54,7 @@ Walker.prototype._onfile = function (filepath, cb) {
     if (err) return cb(err)
     self.push({
       basename: path.basename(filepath),
-      relname: path.relative(self._dir, filepath),
+      relname: self._dir === filepath ? path.basename(filepath) : path.relative(self._dir, filepath),
       filepath: filepath,
       stat: stat
     })
