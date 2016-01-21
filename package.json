@@ -1,6 +1,6 @@
 {
   "name": "folder-walker",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A recursive stream of the files and directories in a given folder",
   "main": "index.js",
   "scripts": {
