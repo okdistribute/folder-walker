@@ -23,10 +23,9 @@
   },
   "homepage": "https://github.com/karissa/folder-walker#readme",
   "dependencies": {
-    "from2": "^2.1.0",
-    "pump": "^1.0.1",
-    "readable-stream": "^2.0.4",
-    "tape": "^4.2.2",
-    "through2": "^2.0.0"
+    "from2": "^2.1.0"
+  },
+  "devDependencies": {
+    "tape": "^4.4.0"
   }
 }
