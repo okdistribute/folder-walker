@@ -10,7 +10,7 @@ function walker (dirs, opts) {
 
   var pending = []
 
-  dirs.map(function (dir) {
+  dirs.forEach(function (dir) {
     dir = filter(dir) ? dir : null
     if (dir) pending.push(dir)
   })
@@ -36,12 +36,15 @@ function walker (dirs, opts) {
 
       function done (err, dir) {
         if (err) return cb(err)
-        cb(null, {
+        var item = {
           basename: path.basename(name),
           relname: dir === name ? path.basename(name) : path.relative(dir, name),
           filepath: name,
           stat: st
-        })
+        }
+        if (st.isFile()) item.type = 'file'
+        if (st.isDirectory()) item.type = 'directory'
+        cb(null, item)
       }
     })
   }
