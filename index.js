@@ -8,21 +8,27 @@ function walker (dirs, opts) {
   var filter = opts && opts.filter || function (filename) { return true }
   if (!Array.isArray(dirs)) dirs = [dirs]
 
-  var pending = []
+  dirs = dirs.filter(filter)
 
-  dirs.forEach(function (dir) {
-    dir = filter(dir) ? dir : null
-    if (dir) pending.push(dir)
-  })
+  var pending = []
+  var root = dirs.shift()
+  if (root) pending.push(root)
 
   return from.obj(read)
 
   function read (size, cb) {
-    if (!pending.length) return cb(null, null)
+    if (!pending.length) {
+      if (dirs.length) {
+        root = dirs.shift()
+        pending.push(root)
+        return read(size, cb)
+      }
+      return cb(null, null)
+    }
     var name = pending.shift()
     fs.lstat(name, function (err, st) {
       if (err) return done(err)
-      if (!st.isDirectory()) return done(null, name)
+      if (!st.isDirectory()) return done(null)
 
       fs.readdir(name, function (err, files) {
         if (err) return done(err)
@@ -31,19 +37,18 @@ function walker (dirs, opts) {
           var next = path.join(name, files[i])
           if (filter(next)) pending.unshift(next)
         }
-        done(null, name)
+        done(null)
       })
 
-      function done (err, dir) {
+      function done (err) {
         if (err) return cb(err)
         var item = {
-          basename: path.basename(name),
-          relname: dir === name ? path.basename(name) : path.relative(dir, name),
+          root: root,
           filepath: name,
-          stat: st
+          stat: st,
+          relname: root === name ? path.basename(name) : path.relative(root, name),
+          basename: path.basename(name)
         }
-        if (st.isFile()) item.type = 'file'
-        if (st.isDirectory()) item.type = 'directory'
         cb(null, item)
       }
     })

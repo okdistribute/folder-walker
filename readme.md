@@ -27,6 +27,7 @@ Example item in the stream:
 {
   basename: 'index.js',
   relname: 'test/index.js',
+  root: '/Users/karissa/dev/node_modules/folder-walker',
   filepath: '/Users/karissa/dev/node_modules/folder-walker/test/index.js',
   stat: [fs.Stat Object],
   type: 'file' // or 'directory'
