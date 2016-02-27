@@ -17,15 +17,14 @@ test('test data stream', function (t) {
   })
 })
 
-test.only('test multiple folders', function (t) {
+test('test multiple folders', function (t) {
   var stream = walker([process.cwd(), path.join(__dirname, 'fixtures')],
     { filter: function filter (filepath) {
       return filepath.indexOf('.git') === -1
-    }}
-)
+    }})
 
   stream.on('data', function (data) {
-    console.log(data)
+    t.ok(data.filepath)
   })
 
   stream.on('error', function (err) {
