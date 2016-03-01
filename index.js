@@ -49,6 +49,12 @@ function walker (dirs, opts) {
           relname: root === name ? path.basename(name) : path.relative(root, name),
           basename: path.basename(name)
         }
+        var isFile = st.isFile()
+        if (isFile) {
+          item.type = 'file'
+        }
+        var isDir = st.isDirectory()
+        if (isDir) item.type = 'directory'
         cb(null, item)
       }
     })
