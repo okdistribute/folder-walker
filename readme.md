@@ -11,7 +11,9 @@ A recursive stream of the files and directories in a given folder. Can take mult
 npm install folder-walker
 ```
 
-## Example
+## Examples
+
+### Multiple folders
 
 ```js
 var walker = require('folder-walker')
@@ -23,7 +25,7 @@ stream.on('data', function (data) {
 
 Example item in the stream:
 
-```
+```js
 {
   basename: 'index.js',
   relname: 'test/index.js',
@@ -32,4 +34,10 @@ Example item in the stream:
   stat: [fs.Stat Object],
   type: 'file' // or 'directory'
 }
+```
+
+### Minimatch Filtering
+
+```js
+var stream = walker('/path/to/folder', { ignore: ['.git', '.dat'], ignoreFiles: ['.gitignore', '.datignore'] })
 ```
