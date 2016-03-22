@@ -99,3 +99,39 @@ test('test data stream filtering out .git', function (t) {
     t.end()
   })
 })
+
+test('test data stream with ignore file .ignore', function (t) {
+  var stream = walker(path.join(__dirname, 'fixtures'), { ignoreFiles: '.ignore' })
+
+  stream.on('data', function (data) {
+    t.equal(data.filepath.indexOf('file.ignore'), -1)
+    console.log(data.filepath)
+    t.equal(data.filepath.indexOf('file'), -1)
+    t.ok(data.stat, 'has stat')
+    t.ok(data.root, 'has root')
+  })
+
+  stream.on('error', function (err) {
+    t.ifError(err)
+  })
+
+  stream.on('end', function () {
+    t.end()
+  })
+})
+
+test('test data stream with minimatch ignore rule', function (t) {
+  var stream = walker(path.join(__dirname, 'fixtures'), { ignore: 'file.ignore' })
+
+  stream.on('data', function (data) {
+    t.equal(data.filepath.indexOf('file.ignore'), -1)
+  })
+
+  stream.on('error', function (err) {
+    t.ifError(err)
+  })
+
+  stream.on('end', function () {
+    t.end()
+  })
+})
