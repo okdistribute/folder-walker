@@ -51,7 +51,6 @@ function walker (dirs, opts) {
         if (err) return done(err)
 
         // pre-filter global ignore parameters
-
         files = files
         .sort()
         .filter(Ignore().add(ignore).createFilter())

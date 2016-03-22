@@ -36,8 +36,8 @@ Example item in the stream:
 }
 ```
 
-### Minimatch Filtering
+### Ignores
 
 ```js
-var stream = walker('/path/to/folder', { ignore: ['.git', '.dat'], ignoreFiles: ['.gitignore', '.datignore'] })
+var stream = walker('/path/to/folder', { ignore: ['.git', '.dat'] })
 ```
