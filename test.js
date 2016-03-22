@@ -131,7 +131,7 @@ test('test ignore file support using hook', function (t) {
       localrules = fs.readFileSync(ignorepath, { encoding: 'utf-8' }).trim().split('\n')
     }
 
-    var parentDirectories = [...new Set(('./'+path.dirname(directory)).split('/'))]
+    var parentDirectories = ('./'+path.dirname(directory)).split('/').filter(onlyUnique)
     var parentRules = parentDirectories.reduce(function (prevParent, currParent) { return prevParent.concat(rules[currParent]) }, []).filter(Boolean)
 
     var ig = ignore().add(parentRules.concat(localrules))
@@ -154,6 +154,9 @@ test('test ignore file support using hook', function (t) {
     return this
   }
 
+  function onlyUnique(value, index, self) { 
+      return self.indexOf(value) === index;
+  }
 
   stream.on('data', function (data) {
     t.equal(data.filepath.indexOf('ignoreme'), -1)
