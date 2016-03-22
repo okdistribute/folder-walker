@@ -1,7 +1,7 @@
 var from = require('from2')
 var fs = require('fs')
 var path = require('path')
-var minimatch = require('minimatch')
+var Ignore = require('ignore')
 
 module.exports = walker
 
@@ -48,14 +48,15 @@ function walker (dirs, opts) {
             ignore = ignore.concat(fs.readFileSync(full, { encoding: 'utf-8' }).trim().split('\n'))
           }
         }
-        for (var i = 0; i < files.length; i++) {
-          var next = path.join(name, files[i])
-          var relative = path.relative(process.cwd(), next)
-          var matches = ignore.filter(function (rule) {
-            return minimatch(relative, rule, { matchBase: true, dot: true }) || minimatch('/'+relative, rule, { matchBase: true, dot: true })
-          });
-          if (filter(next) && matches.length == 0) pending.unshift(next)
-        }
+
+        var ig = Ignore().add(ignore)
+
+        pending = files
+        .map(function(file) { return path.relative(process.cwd(), path.join(name, file)) })
+        .filter(function (file) { return filter(file) })
+        .filter(ig.createFilter())
+        .concat(pending)
+
         done(null)
       })
 
