@@ -13,12 +13,12 @@ var stream = walker(path.join(__dirname, 'fixtures'), { hook: function (director
     localRules = fs.readFileSync(full, { encoding: 'utf-8' }).trim().split('\n')
   }
 
-  var parentDirectories = [...new Set(('./'+path.dirname(directory)).split('/'))]
+  var parentDirectories = ('./'+path.dirname(directory)).split('/').filter(onlyUnique)
   var parentRules = parentDirectories.reduce(function (prevParent, currParent) { return prevParent.concat(rules[currParent]) }, []).filter(Boolean)
 
   var ig = ignore().add(parentRules.concat(localRules))
   var paths = files.map(function(file) { return path.join(directory, file) })
-  var pass = paths.filter(ig.createFilter());
+  var pass = paths.filter(ig.createFilter())
 
   // verbose()
   rules.add(directory, localRules)
@@ -55,26 +55,26 @@ var stream = walker(path.join(__dirname, 'fixtures'), { hook: function (director
   //   console.log('',pass.join('\n '))
 
   //   function diff (a1, a2) {
-  //     var a = [], diff = [];
+  //     var a = [], diff = []
 
-  //     for (var i = 0; i < a1.length; i++) {
-  //         a[a1[i]] = true;
+  //     for (var i = 0 i < a1.length i++) {
+  //         a[a1[i]] = true
   //     }
 
-  //     for (var i = 0; i < a2.length; i++) {
+  //     for (var i = 0 i < a2.length i++) {
   //       if (a[a2[i]]) {
-  //         delete a[a2[i]];
+  //         delete a[a2[i]]
   //       } else {
-  //         a[a2[i]] = true;
+  //         a[a2[i]] = true
   //       }
   //     }
 
   //     for (var k in a) {
-  //       diff.push(k);
+  //       diff.push(k)
   //     }
 
-  //     return diff;
-  //   };
+  //     return diff
+  //   }
   // }
 
 }})
@@ -94,3 +94,7 @@ Rules.prototype.add = function(directory, rules) {
   }
   return this
 }
+
+  function onlyUnique(value, index, self) { 
+      return self.indexOf(value) === index
+  }

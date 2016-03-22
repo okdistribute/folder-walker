@@ -135,7 +135,7 @@ test('test ignore file support using hook', function (t) {
     var parentRules = parentDirectories.reduce(function (prevParent, currParent) { return prevParent.concat(rules[currParent]) }, []).filter(Boolean)
 
     var ig = ignore().add(parentRules.concat(localrules))
-    var pass = paths.filter(ig.createFilter());
+    var pass = paths.filter(ig.createFilter())
 
     rules.add(directory, localrules)
     next(pass)
@@ -155,7 +155,7 @@ test('test ignore file support using hook', function (t) {
   }
 
   function onlyUnique(value, index, self) { 
-      return self.indexOf(value) === index;
+      return self.indexOf(value) === index
   }
 
   stream.on('data', function (data) {

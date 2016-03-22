@@ -12,7 +12,7 @@ function walker (dirs, opts) {
       return path.join(directory, file)
     })) 
   }, 
-  ignore = [];
+  ignore = []
 
   if (!Array.isArray(dirs) && typeof dirs === 'object') {
     opts = dirs
@@ -21,9 +21,9 @@ function walker (dirs, opts) {
     dirs = [].concat(dirs || ['.'])
   }
 
-  if (opts && typeof opts.filter === 'function') filter = opts.filter;
-  if (opts && typeof opts.hook === 'function') hook = opts.hook;
-  if (opts && opts.ignore) ignore = ignore.concat(opts.ignore || []);
+  if (opts && typeof opts.filter === 'function') filter = opts.filter
+  if (opts && typeof opts.hook === 'function') hook = opts.hook
+  if (opts && opts.ignore) ignore = ignore.concat(opts.ignore || [])
 
   dirs = dirs.filter(filter)
 
