@@ -50,6 +50,13 @@ test('test data stream filtering out .git', function (t) {
   })
 })
 
+test('dont include root directory in response', function (t) {
+  var stream = generateWalker(t)
+  stream.on('data', function (data) {
+    if (data.filepath === process.cwd()) t.ok(false)
+  })
+})
+
 function generateWalker (t, opts) {
   if (!opts) opts = {}
   function filter (filepath) {

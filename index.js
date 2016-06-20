@@ -25,6 +25,10 @@ function walker (dirs, opts) {
       }
       return cb(null, null)
     }
+    kick(cb)
+  }
+
+  function kick (cb) {
     var name = pending.shift()
     fs.lstat(name, function (err, st) {
       if (err) return done(err)
@@ -37,7 +41,8 @@ function walker (dirs, opts) {
           var next = path.join(name, files[i])
           if (filter(next)) pending.unshift(next)
         }
-        done(null)
+        if (name === root) kick(cb)
+        else done(null)
       })
 
       function done (err) {
