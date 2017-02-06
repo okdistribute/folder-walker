@@ -1,5 +1,6 @@
 var test = require('tape')
 var path = require('path')
+var fs = require('fs')
 var walker = require('./')
 
 test('test multiple folders', function (t) {
@@ -16,6 +17,18 @@ test('test data stream with only a file', function (t) {
 
   stream.on('data', function (data) {
     t.same(data.filepath, __filename)
+  })
+
+})
+
+test('test data stream with only no files', function (t) {
+  var folderPath = path.join(__dirname, 'fixtures', 'emptyfolder')
+  generateEmptyFolder(folderPath)
+  var stream = generateWalker(t, {path: folderPath})
+  t.plan(0)
+
+  stream.on('data', function (data) {
+    t.fail('should not hit')
   })
 
 })
@@ -72,4 +85,10 @@ function generateWalker (t, opts) {
     t.end()
   })
   return stream
+}
+
+function generateEmptyFolder (folderPath) {
+  try {
+    fs.mkdirSync(folderPath)
+  } catch (e) {}
 }

@@ -30,6 +30,7 @@ function walker (dirs, opts) {
 
   function kick (cb) {
     var name = pending.shift()
+    if (typeof name === 'undefined') return cb(null, null)
     fs.lstat(name, function (err, st) {
       if (err) return done(err)
       if (!st.isDirectory()) return done(null)
