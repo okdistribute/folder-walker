@@ -1,10 +1,10 @@
 var from = require('from2')
-var fs = require('fs')
 var path = require('path')
 
 module.exports = walker
 
 function walker (dirs, opts) {
+  var fs = opts && opts.fs || require('fs')
   var filter = opts && opts.filter || function (filename) { return true }
   if (!Array.isArray(dirs)) dirs = [dirs]
 
