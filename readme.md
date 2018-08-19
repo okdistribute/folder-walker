@@ -33,3 +33,21 @@ Example item in the stream:
   type: 'file' // or 'directory'
 }
 ```
+
+## API
+
+#### `stream = walker(dirs, [opts])`
+
+Create a readable object stream of all files and folders inside of a `dir`.
+
+`dirs` can be a path to a directory or an array of paths to directories.
+
+`opts` includes:
+
+```js
+{
+  fs: require('fs') // the fs interface to use
+  filter: function (filename) { return true } // a function that lets you filter out files by returning false
+  // filter is applied to the `dirs` argument, and ever file that folder-walker finds
+}
+```
