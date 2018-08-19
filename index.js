@@ -7,6 +7,7 @@ function walker (dirs, opts) {
   var fs = opts && opts.fs || require('fs')
   var filter = opts && opts.filter || function (filename) { return true }
   if (!Array.isArray(dirs)) dirs = [dirs]
+  var maxDepth = opts && opts.maxDepth || Infinity
 
   dirs = dirs.filter(filter)
 
@@ -33,7 +34,7 @@ function walker (dirs, opts) {
     if (typeof name === 'undefined') return cb(null, null)
     fs.lstat(name, function (err, st) {
       if (err) return done(err)
-      if (!st.isDirectory()) return done(null)
+      if (!st.isDirectory() || depthLimiter(name, root, maxDepth)) return done(null)
 
       fs.readdir(name, function (err, files) {
         if (err) return done(err)
@@ -65,4 +66,11 @@ function walker (dirs, opts) {
       }
     })
   }
+}
+
+function depthLimiter (filePath, relativeTo, maxDepth) {
+  if (maxDepth === Infinity) return false
+  const rootDepth = relativeTo.split(path.sep).length
+  const fileDepth = filePath.split(path.sep).length
+  return fileDepth - rootDepth > maxDepth
 }

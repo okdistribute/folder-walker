@@ -18,7 +18,6 @@ test('test data stream with only a file', function (t) {
   stream.on('data', function (data) {
     t.same(data.filepath, __filename)
   })
-
 })
 
 test('test data stream with only no files', function (t) {
@@ -30,7 +29,6 @@ test('test data stream with only no files', function (t) {
   stream.on('data', function (data) {
     t.fail('should not hit')
   })
-
 })
 
 test('test data stream with filter', function (t) {
@@ -67,6 +65,21 @@ test('dont include root directory in response', function (t) {
   var stream = generateWalker(t)
   stream.on('data', function (data) {
     if (data.filepath === process.cwd()) t.ok(false)
+  })
+})
+
+test('dont walk past the maxDepth', function (t) {
+  var stream = walker(['.git', 'node_modules'], { maxDepth: 3 })
+  stream.on('data', function (data) {
+    t.true(data.filepath.split(path.sep).length - process.cwd().split(path.sep).length <= 3, `${data.filepath.split(path.sep).length} - ${process.cwd().split(path.sep).length} = ${data.filepath.split(path.sep).length - process.cwd().split(path.sep).length} <= ${3}`)
+  })
+
+  stream.on('error', function (err) {
+    t.ifError(err)
+  })
+
+  stream.on('end', function () {
+    t.end()
   })
 })
 
