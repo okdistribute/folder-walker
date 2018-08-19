@@ -38,7 +38,7 @@ Example item in the stream:
 
 #### `stream = walker(dirs, [opts])`
 
-Create a readable object stream of all files and folders inside of a `dir`.
+Create a readable object stream of all files and folders inside of `dirs`.
 
 `dirs` can be a path to a directory or an array of paths to directories.
 
