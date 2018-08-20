@@ -7,7 +7,7 @@ A recursive stream of the files and directories in a given folder. Can take mult
 
 ## Install
 
-```
+```console
 npm install folder-walker
 ```
 
@@ -23,7 +23,7 @@ stream.on('data', function (data) {
 
 Example item in the stream:
 
-```
+```js
 {
   basename: 'index.js',
   relname: 'test/index.js',
