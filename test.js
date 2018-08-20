@@ -71,7 +71,8 @@ test('dont include root directory in response', function (t) {
 test('dont walk past the maxDepth', function (t) {
   var stream = walker(['.git', 'node_modules'], { maxDepth: 3 })
   stream.on('data', function (data) {
-    t.true(data.filepath.split(path.sep).length - process.cwd().split(path.sep).length <= 3, `${data.filepath.split(path.sep).length} - ${process.cwd().split(path.sep).length} = ${data.filepath.split(path.sep).length - process.cwd().split(path.sep).length} <= ${3}`)
+    t.true(
+      data.filepath.split(path.sep).length - process.cwd().split(path.sep).length <= 3)
   })
 
   stream.on('error', function (err) {
