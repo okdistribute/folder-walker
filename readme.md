@@ -7,7 +7,7 @@ A recursive stream of the files and directories in a given folder. Can take mult
 
 ## Install
 
-```
+```console
 npm install folder-walker
 ```
 
@@ -23,7 +23,7 @@ stream.on('data', function (data) {
 
 Example item in the stream:
 
-```
+```js
 {
   basename: 'index.js',
   relname: 'test/index.js',
@@ -46,8 +46,9 @@ Create a readable object stream of all files and folders inside of `dirs`.
 
 ```js
 {
-  fs: require('fs') // the fs interface to use
+  fs: require('fs'), // the fs interface to use
+  maxDepth: Infinity // maximum folder depth to walk. Minimum depth is 1.
   filter: function (filename) { return true } // a function that lets you filter out files by returning false
-  // filter is applied to the `dirs` argument, and ever file that folder-walker finds
+  // filter is applied to the `dirs` argument, and every file that folder-walker finds
 }
 ```
